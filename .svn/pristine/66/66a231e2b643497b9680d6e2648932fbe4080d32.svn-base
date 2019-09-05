@@ -1,0 +1,9 @@
+package cn.QQWeb.dao;
+
+import cn.QQWeb.domain.Sale_Visit;
+
+public interface SaleVisitDao {
+
+	void saveOrUpdate(Sale_Visit saleVisit);
+
+}

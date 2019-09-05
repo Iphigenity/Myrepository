@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    <!-- package属性相当于导包 -->
+<hibernate-mapping package="cn.QQWeb.domain">
+	<class name="Customer" table="customer">
+		<!-- length配置长度，not-null配置非空 -->
+		<!-- 主键 -->
+		<id name="cusid">
+		<!-- 配置主键生成策略 -->
+			<generator class="native"></generator>
+		</id>
+		<!-- 其余元素 -->
+		<!-- 对象属性对应的列名 -->
+		<property name="custName"></property>
+		<property name="custLinkman"></property>
+	
+		<!-- 设置关联的类集合 
+			 inverse属性true为不维护关系属性-->
+		
+		<!-- 配置一对多关系
+			 name设置创建的多对多关联的实体类的集合属性名 -->
+		<!-- <set name="linkMen" inverse="false">
+			<key column="cusid" ></key>
+			<one-to-many class="LinkMan" />
+		</set> -->
+		<many-to-one name="custSource" column="dict_type_name" class="BaseDict" ></many-to-one>
+		<many-to-one name="custLevel" column="dict_item_name" class="BaseDict" ></many-to-one>
+		<many-to-one name="dict_id" column="dict_id" class="BaseDict" ></many-to-one>
+	</class>
+	
+</hibernate-mapping>

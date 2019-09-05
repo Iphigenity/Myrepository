@@ -1,0 +1,15 @@
+package cn.QQWeb.dao;
+
+import java.util.List;
+
+import org.hibernate.criterion.DetachedCriteria;
+
+import cn.QQWeb.domain.Customer;
+
+public interface CustomerDao {
+
+	Integer gettotalCount(DetachedCriteria dc);
+
+	List<Customer> getPageBean(DetachedCriteria dc, int start, Integer pageSize);
+
+}

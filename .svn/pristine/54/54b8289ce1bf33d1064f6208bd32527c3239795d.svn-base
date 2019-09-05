@@ -1,0 +1,38 @@
+package cn.QQWeb.dao.impl;
+
+import java.util.List;
+
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.Projections;
+import org.springframework.orm.hibernate5.HibernateCallback;
+import org.springframework.orm.hibernate5.HibernateTemplate;
+import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
+
+import cn.QQWeb.dao.CustomerDao;
+import cn.QQWeb.domain.Customer;
+
+public class CustomerDaoImpl extends HibernateDaoSupport implements CustomerDao {
+
+	public Integer gettotalCount(DetachedCriteria dc) {
+		//为离线查询对象添加聚合函数
+		dc.setProjection(Projections.rowCount());
+		//查询客户的总记录数
+		List<Long> list = (List<Long>) getHibernateTemplate().findByCriteria(dc);
+		//清空添加的聚合函数
+		dc.setProjection(null);
+		if(list != null && list.size() > 0) {
+			return list.get(0).intValue();
+		}
+		
+		return null;
+	}
+
+	public List<Customer> getPageBean(DetachedCriteria dc, int start, Integer pageSize) {
+		//查询所有满足条件的客户
+		List<Customer> list = (List<Customer>) getHibernateTemplate().findByCriteria(dc,start,pageSize);
+		
+		return list;
+	}
+
+}

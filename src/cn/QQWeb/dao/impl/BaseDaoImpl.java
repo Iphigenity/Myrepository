@@ -1,0 +1,86 @@
+package cn.QQWeb.dao.impl;
+
+import java.io.Serializable;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.List;
+
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Projections;
+import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
+
+import cn.QQWeb.dao.BaseDao;
+import cn.QQWeb.domain.Customer;
+
+public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
+
+	//用于封装当前泛型class
+	private Class clazz;
+	
+	
+	public BaseDaoImpl() {
+		//
+		ParameterizedType TClass = (ParameterizedType) this.getClass().getGenericSuperclass();
+		//获取运行期的泛型类型
+		Type[] TC = TClass.getActualTypeArguments();
+		clazz = (Class) TC[0];
+	}
+
+	@Override
+	public void save(T t) {
+		getHibernateTemplate().save(t);
+	}
+
+	@Override
+	public void delete(T t) {
+		getHibernateTemplate().delete(t);
+	}
+
+	@Override
+	public void delete(Serializable id) {
+		//通过id获取持久化状态实体
+		T t = this.getById(id);
+		//删除
+		getHibernateTemplate().delete(t);
+	}
+
+	@Override
+	public void update(T t) {
+		getHibernateTemplate().update(t);
+	}
+
+	@Override
+	public T getById(Serializable id) {
+		T t = (T) getHibernateTemplate().get(clazz, id);
+		return t;
+	}
+
+	@Override
+	public Integer getTotalCount(DetachedCriteria dc) {
+		//为离线查询对象添加聚合函数
+		dc.setProjection(Projections.rowCount());
+		//查询客户的总记录数
+		List<Long> list = (List<Long>) getHibernateTemplate().findByCriteria(dc);
+		//清空添加的聚合函数
+		dc.setProjection(null);
+		if(list != null && list.size() > 0) {
+			return list.get(0).intValue();
+		}
+		
+		return null;
+	}
+
+	@Override
+	public List<T> getPageBean(DetachedCriteria dc, Integer start, Integer pageSize) {
+		//查询所有满足条件的客户
+		List<T> list = (List<T>) getHibernateTemplate().findByCriteria(dc,start,pageSize);
+		
+		return list;
+	}
+
+	@Override
+	public void saveOrUpdate(T t) {
+		getHibernateTemplate().saveOrUpdate(t);
+	}
+
+}

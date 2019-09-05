@@ -1,0 +1,5 @@
+package cn.QQWeb.dao;
+
+public interface LinkManDao<T> extends BaseDao<T> {
+
+}

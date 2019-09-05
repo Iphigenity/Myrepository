@@ -1,0 +1,8 @@
+package cn.QQWeb.service;
+
+import cn.QQWeb.domain.user;
+
+public interface userService {
+	
+	void getUserById(user user);
+}

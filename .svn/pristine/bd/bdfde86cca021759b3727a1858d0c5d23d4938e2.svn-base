@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+	<struts>
+	<!-- #  struts.objectFactory = spring	将action的创建交给spring容器	
+			struts.objectFactory.spring.autoWire = name spring负责装配Action依赖属性
+			-->
+	<constant name="struts.objectFactory" value="spring"></constant>
+
+	<!-- 配置action action依赖由spring完成注入-->
+	<package name="Action" namespace="/" extends="struts-default">
+	<!-- 注册拦截器 -->
+		<interceptors >
+			<interceptor name="PrivilegeInterceptor" class="cn.QQWeb.web.intercetor.PrivilegeIntercetor"></interceptor>
+				<!-- 注册拦截器栈 -->
+				<interceptor-stack name="MyStack">
+					<interceptor-ref name="PrivilegeInterceptor">
+						<param name="excludeMethods">login,regist</param>
+					</interceptor-ref>
+					<!-- 引用默认拦截器 -->
+					<interceptor-ref name="defaultStack"></interceptor-ref>
+				</interceptor-stack>
+		</interceptors>
+		<!-- 指定默认拦截器栈 -->
+		<default-interceptor-ref name="MyStack"></default-interceptor-ref>
+		<global-results>
+			<result name="toLogin" type="redirect">/login.jsp</result>
+		</global-results>
+		<!-- BaseDictAvtion -->
+		<action name="baseDictAction" class="BaseDictAvtion" method="execute">
+		
+		</action>
+		
+		<!-- userAction -->
+		<action name="userAction_*" class="userAction" method="{1}">
+		<result name="toHome" type="redirect">/index.htm</result>
+		<result name="regist" >/regist.jsp</result>
+		<result name="reLogin" >/login.jsp</result>
+		<result name="toLogin" type="redirect">/login.jsp</result>
+		
+		</action>
+		
+		<!-- customerAction -->
+		<action name="CustomerAction_*" class="customerAction" method="{1}">
+		<result name="toAdd" >/jsp/customer/add.jsp</result>
+		<result name="list" >/jsp/customer/list.jsp</result>
+		<result name="industryCount" >/jsp/customer/industryCount.jsp</result>
+		<result name="toList" type="redirectAction"  >
+		<param name="namespace">/</param>
+		<param name="actionName">CustomerAction_list</param>
+		</result>
+		
+		</action>
+		
+		<!-- 配置LinkManAction -->
+		<action name="LinkManAction_*" class="linkManAction" method="{1}">
+		<result name="list">/jsp/linkman/list.jsp</result>
+		<result name="toAdd" >/jsp/linkman/add.jsp</result>
+		<result name="toList" type="redirectAction"  >
+		<param name="namespace">/</param>
+		<param name="actionName">LinkManAction_list</param>
+		</result>
+		
+		</action>
+
+		<!-- 配置SaleVisitAction -->
+		<action name="SaleVisitAction_*" class="saleVisitAction" method="{1}">
+		<result name="toList" type="redirectAction"  >
+		<param name="namespace">/</param>
+		<param name="actionName">SaleVisitAction_list</param>
+		</result>
+		<result name="list">/jsp/salevisit/list.jsp</result>
+		<result name="toAdd" >/jsp/linkman/add.jsp</result>
+		
+		</action>
+		
+	</package>
+	</struts>

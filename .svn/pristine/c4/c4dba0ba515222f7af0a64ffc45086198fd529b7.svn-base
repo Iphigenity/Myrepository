@@ -1,0 +1,31 @@
+package cn.QQWeb.web.action;
+
+import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.ModelDriven;
+
+import cn.QQWeb.dao.userDao;
+import cn.QQWeb.domain.user;
+import cn.QQWeb.service.userService;
+
+public class userAction extends ActionSupport implements ModelDriven<user> {
+	
+	private user u = new user();
+	
+	private userService service;
+	
+	
+
+	public String login() {
+		service.getUserById(u);
+		return "toHome";
+	}
+	
+	public user getModel() {
+		
+		return u;
+	}
+
+	public void setService(userService service) {
+		this.service = service;
+	}
+}

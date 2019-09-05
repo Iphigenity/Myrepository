@@ -1,0 +1,22 @@
+package cn.QQWeb.service.impl;
+
+import cn.QQWeb.dao.SaleVisitDao;
+import cn.QQWeb.domain.Sale_Visit;
+import cn.QQWeb.service.SaleVisitService;
+
+public class SaleVisitServiceImpl implements SaleVisitService {
+
+	private SaleVisitDao dao;
+	
+
+	public void saveOrUpdate(Sale_Visit saleVisit) {
+		dao.saveOrUpdate(saleVisit);
+	}
+	
+	
+	
+	public void setDao(SaleVisitDao dao) {
+		this.dao = dao;
+	}
+
+}

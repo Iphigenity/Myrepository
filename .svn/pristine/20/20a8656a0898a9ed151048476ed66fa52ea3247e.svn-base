@@ -1,0 +1,8 @@
+package cn.QQWeb.dao.impl;
+
+import cn.QQWeb.dao.SaleVisitDao;
+import cn.QQWeb.domain.Sale_Visit;
+
+public class SaleVisitDaoImpl extends BaseDaoImpl<Sale_Visit> implements SaleVisitDao {
+
+}

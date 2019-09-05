@@ -1,0 +1,9 @@
+package cn.QQWeb.service;
+
+import cn.QQWeb.domain.Sale_Visit;
+
+public interface SaleVisitService {
+
+	void saveOrUpdate(Sale_Visit saleVisit);
+
+}

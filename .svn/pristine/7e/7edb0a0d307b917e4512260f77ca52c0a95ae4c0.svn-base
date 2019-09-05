@@ -1,0 +1,26 @@
+package cn.QQWeb.service.impl;
+
+
+import cn.QQWeb.dao.userDao;
+import cn.QQWeb.domain.user;
+import cn.QQWeb.service.userService;
+
+
+public class userServiceImpl implements userService {
+	
+	private userDao dao;
+	
+
+
+	public void getUserById(user user) {
+		
+		dao.getUserById(user);
+		
+	}
+	
+	
+	
+	public void setDao(userDao dao) {
+		this.dao = dao;
+	}
+}

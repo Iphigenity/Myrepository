@@ -1,0 +1,54 @@
+package cn.QQWeb.web.action;
+
+import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.ModelDriven;
+
+import cn.QQWeb.domain.Sale_Visit;
+import cn.QQWeb.domain.user;
+import cn.QQWeb.service.SaleVisitService;
+
+public class SaleVisitAction extends ActionSupport implements ModelDriven<Sale_Visit> {
+	
+	private Sale_Visit SaleVisit = new Sale_Visit();
+	
+	private SaleVisitService service;
+	
+
+
+
+	public String add() throws Exception {
+		
+		//获取session中的登录用户，用于维护关系
+		user user = (user) ActionContext.getContext().getSession().get("user");
+		//将用户存入SaleVisit中
+		SaleVisit.setUser(user);
+		//调用service保存SaleVisit
+		service.saveOrUpdate(SaleVisit);
+		//重定向至拜访记录列表Action
+		return "toList";
+	}
+	
+	
+	
+	
+	
+	
+	
+	public void setService(SaleVisitService service) {
+		this.service = service;
+	}
+
+
+
+
+
+
+
+	@Override
+	public Sale_Visit getModel() {
+		// TODO Auto-generated method stub
+		return SaleVisit;
+	}
+
+}
